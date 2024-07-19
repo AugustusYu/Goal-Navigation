@@ -28,6 +28,9 @@ We recruited a total of 600 participants to play navigation and belief inference
 |:--:|:--:|
 | *Experiment 3: Two Player Navigation Game Interface* | *Experiment 4: Two Player Belief Inference Game Interface* |
 
+## Human Behavior Models
+
+We share our trained behavior models in the [behavior-models](behavior-models/) directory and provide example codes in [Notebooks/behavior_model.ipynb](Notebooks/behavior_model.ipynb).
 
 
 ## Notebooks
