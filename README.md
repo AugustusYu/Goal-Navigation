@@ -2,20 +2,16 @@
 
 The dataset used in [our paper](https://arxiv.org/abs/2406.06051) captures human navigation behavior within two grid world environments and examines how humans infer the goals of other players.
 
-
 ## Grid Wrold of Size 6*6
 
 We recruited a total of 800 participants to play navigation and belief inference games in a 6x6 grid world.
 
-- **Navigation Game**: Human participants used the keyboard to move a player {up, down, right, left} from a starting position to a designated goal position (marked by a red star). The experimental data is available in [Experiment 1](experiment1/).
-- **Belief Inference Game**: Human participants observed a robot's movements and inferred which goal (green triangle or red star) the robot was heading towards. The experimental data is available in [Experiment 2](experiment2/).
-
+- **Navigation Game**: Human participants used the keyboard to move a player {up, down, right, left} from a starting position to a designated goal position (marked by a red star). The experimental data is available in [Experiment 1](experiment1/). The experiment code for collecting data via Amazon Mechanical Turk is available in the  [Experiment 1/MTurk](experiment1/MTurk) directory. To run the experiment, open [Single_player_grid6.html](experiment1/MTurk/Single_player_grid6.html) in a browser and append the suffix "?workerId=123" to the URL to execute the code.
+- **Belief Inference Game**: Human participants observed a robot's movements and inferred which goal (green triangle or red star) the robot was heading towards. The experimental data is available in [Experiment 2](experiment2/). The experiment code for collecting data via Amazon Mechanical Turk is available in the  [Experiment 2/MTurk](experiment2/MTurk) directory.
 
 | ![Experiment 1: Navigation Game Interface](figures/navigation-game.png) | ![Experiment 2: Belief Inference Game Interface](figures/belief-inference.png) |
 |:--:|:--:|
 | *Experiment 1: Navigation Game Interface* | *Experiment 2: Belief Inference Game Interface* |
-
-
 
 ## Grid Wrold of Size 8*8
 
@@ -31,7 +27,6 @@ We recruited a total of 600 participants to play navigation and belief inference
 ## Human Behavior Models
 
 We share our trained behavior models in the [behavior-models](behavior-models/) directory and provide example codes in [Notebooks/behavior_model.ipynb](Notebooks/behavior_model.ipynb).
-
 
 ## Notebooks
 

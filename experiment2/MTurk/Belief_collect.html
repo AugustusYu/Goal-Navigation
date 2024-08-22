@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Include JavaScript files for game logic and layout -->
+    <script src="Control_logic_belief.js"></script>
+    <script src="belief30-0belief.js"></script>
+    <script src="belief30-1distance.js"></script>
+    <!-- Include external CSS file for styling -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Include library for seeded random number generation -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/seedrandom/3.0.5/seedrandom.min.js"></script>
+</head>
+    
+<body>
+
+    <!-- Consent form section, initially hidden -->
+    <div id='consent_id' style="display: none">
+        <ul>
+            <li>
+                <h4><strong><u>Informed Consent:</u></strong></h4>
+                <ul>
+                    <li>
+                        We invite you to participate in a research study being conducted by investigators...
+                    </li>
+                    <li>
+                        If you agree to participate, we would like you to play 30 games about goal recognition, which will take approximately 5~10 minutes...
+                    </li>
+                    <!-- Additional consent details -->
+                    <li>
+                        By clicking on the “<strong>Accept HIT</strong>” button, you indicate you agree to participate...
+                    </li>
+                    <li>
+                        If you have any questions about the research study itself, please contact: ...
+                    </li>
+                    <li>
+                        Thank you very much for your consideration of this research study.
+                    </li>
+                </ul>
+                <br>
+                <!-- Button to proceed to instructions -->
+                <input type="button" id="button_consent" onclick="instruct_init()" value="Accept HIT" class="next_button">    
+            </li>
+        </ul>
+    </div>
+
+    <!-- Instructions section, initially hidden -->
+    <div id="instruct_page" style="display: none">   
+        <ul>
+            <li>
+                <h4><strong><u>Instructions:</u></strong></h4>
+                <p>In this HIT, we want to understand how you infer the intent and actions of other players in a navigation game.</p>
+                <ul>
+                    <li>You will be presented with a 6 &times; 6 grid game environment, as shown below.</li>
+                    <li>One player is controling the <font color='#00f'> blue </font> object to move from the start position to one of the goal grid (<font color="#DE3163"> goal  &#9733;  </font> or <font color="#008000"> goal &#9650; </font>). <font color='#333'> Black </font> grids are Blocks that the player can not pass. </li>
+                    <li>You will be asked to watch how other players move and select which goal the player is moving to.</li>
+                    <li>For each correct answer provided, you will receive a bonus of <b>3 cents</b>. The bonus will be paid within 24 hours...</li>
+                    <img class="center" src="belief_interface_example.png" style="width:800px">
+                    <br>
+                    <li>Click "Start Hit" below to start the Hit.</li>
+                    <!-- Button to start the game -->
+                    <input type="button" id="button_consent" onclick="game_init()" value="Start HIT" class="next_button">    
+                </ul>
+            </li>
+        </ul>
+    </div>
+
+    <!-- Main game interaction section -->
+    <div id="main_plot_interact" style="display: block">
+        <table name='main_table' class="tab-parallel">
+            <tr>
+                <th width="400px" style="text-align:center">Information</th>
+                <th width="25px"></th>
+                <th width="400px" style="text-align:center">Game Interface</th>
+            </tr>
+            <tr>
+                <td style="vertical-align:top" class="text-center">
+                    <p id="game_count">Games: 0/10</p>
+                    <p> The current position of the player is marked as <font color='#00f'> blue</font>, 
+                        the trajetrory is marked as as <font color='#ADD8E6'> lightblue</font>,
+                        and goals are marked <font color="#DE3163"> red </font> / <font color="#008000"> green </font> . Black grids are Walls that the player cannot pass.
+                    </p> 
+                    <p style="font-size:80%;color:grey">Click the button below to replay the player's actions.</p>
+                    <!-- Button to replay the player's actions -->
+                    <input type="button" id="button_gif_play" onclick="path_play()" value="Replay the actions" class="replay_button">
+                    <div id="belief-decision" style="display: none;text-align: left">
+                        <p class="required-field">Which goal do you believe the player is going to?</p>
+                        <label class="radio-label1">
+                            <input type="radio" id="dec_belief_1" name="dec_belief" value="1"> Goal &#9733;<br>
+                        </label>
+                        <label class="radio-label2">
+                            <input type="radio" id="dec_belief_2" name="dec_belief" value="2"> Goal &#9650;<br>
+                        </label>
+                        <br>
+                        <!-- Button to proceed to the next game -->
+                        <input type="button" id="button_next_game" onclick="next_game()" value="Next game" class="iter_button" style="display:block">
+                    </div>
+                </td>
+                <td></td>
+                <td style="vertical-align:top" class="text-center" align="center">
+                    <!-- Grid container where game grid will be generated -->
+                    <div class="grid-container" id="gridContainer"></div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- Survey section, initially hidden -->
+    <div id='survey_id' style="display: none" class='text_page'>
+        <p> Thanks for participating in the survey. Please answer the questions below. </p>
+        <ul>
+            <li>
+                <div class="required-field"> Demographic Information </div>
+                <ul>
+                    <li style="margin: 10px 0;"> Age: <br>
+                        <input type="radio" id="age_select_1" name="age_select" value="1"> 17 or younger <br>
+                        <input type="radio" id="age_select_2" name="age_select" value="2"> 18-20 <br>
+                        <input type="radio" id="age_select_3" name="age_select" value="3"> 21-29<br>
+                        <input type="radio" id="age_select_4" name="age_select" value="4"> 30-39 <br>
+                        <input type="radio" id="age_select_5" name="age_select" value="5"> 40-49 <br>
+                        <input type="radio" id="age_select_6" name="age_select" value="6"> 50-59 <br>
+                        <input type="radio" id="age_select_7" name="age_select" value="7"> 60 or older <br>
+                    </li>
+
+                    <li style="margin: 10px 0;"> Gender: <br>
+                        <input type="radio" id="gender_select_1" name="gender_select" value="1"> Female <br>
+                        <input type="radio" id="gender_select_2" name="gender_select" value="2"> Male <br>
+                        <input type="radio" id="gender_select_3" name="gender_select" value="3"> Other <br>
+                    </li>
+
+                    <li style="margin: 10px 0;"> Race / Ethnicity: <br>
+                        <input type="radio" id="race_select_1" name="race_select" value="1"> White <br>
+                        <input type="radio" id="race_select_2" name="race_select" value="2"> Black or African-American
+                        <br>
+                        <input type="radio" id="race_select_3" name="race_select" value="3"> American Indian or Alaskan
+                        Native <br>
+                        <input type="radio" id="race_select_4" name="race_select" value="4"> Asian or Pacific
+                        Islander<br>
+                        <input type="radio" id="race_select_5" name="race_select" value="5"> Two or more races <br>
+                    </li>
+
+                    <li style="margin: 10px 0;"> Hispanic: <br>
+                        <input type="radio" id="hisp_select_1" name="hisp_select" value="1"> Hispanic Origin<br>
+                        <input type="radio" id="hisp_select_2" name="hisp_select" value="2"> Not Hispanic Origin<br>
+                    </li>
+
+                    <li style="margin: 10px 0;"> Education:<br>
+                        <input type="radio" id="edu_select_1" name="edu_select" value="1"> Some high school credit, no
+                        diploma or equivalent <br>
+                        <input type="radio" id="edu_select_2" name="edu_select" value="2"> High school degree, diploma
+                        or
+                        the equivalent<br>
+                        <input type="radio" id="edu_select_3" name="edu_select" value="3"> Some college credit, no
+                        degree
+                        <br>
+                        <input type="radio" id="edu_select_4" name="edu_select" value="4"> Associate's degree <br>
+                        <input type="radio" id="edu_select_5" name="edu_select" value="5"> Bachelor's degree <br>
+                        <input type="radio" id="edu_select_6" name="edu_select" value="6"> Graduate's degree <br>
+                        <input type="radio" id="edu_select_7" name="edu_select" value="7"> Other<br>
+                    </li>
+
+                    <li style="margin: 10px 0;"> Political View:<br>
+                        <input type="radio" id="political_select_1" name="political_select" value="1"> Liberal <br>
+                        <input type="radio" id="political_select_2" name="political_select" value="2"> Conservative <br>
+                        <input type="radio" id="political_select_3" name="political_select" value="3"> Moderate <br>
+                        <input type="radio" id="political_select_4" name="political_select" value="4"> Other <br>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                <p>(Optional) Let us know if you have any feedback on this HIT:
+                </p>
+                <textarea name="feedback_ans" cols="70" rows="3"></textarea>
+            </li>
+        </ul>
+
+        <p> After finishing the survey, please click the <strong> Submit </strong> button.  </p>
+        <input id="submit-button" name="submit-button" style="display: block" type="submit" value="Submit" />
+        
+        <br><br><br>
+    </div>
+
+    <!-- Hidden section to store output data -->
+    <div id='output' style="display:none">
+        <input id="output_time" name="output_time" value="0">
+        <input id="output_gameidx" name="output_gameidx" value="0">
+        <input id="output_user_actions" name="output_user_actions" value="0">
+        <input id="output_user_treatment" name="output_user_treatment" value="0">
+    </div>
+
+</body>
+
+
+<script id="grid_world_logic"> 
+    // JavaScript code to dynamically create grid items
+    const gridContainer = document.getElementById("gridContainer");
+
+    // Set grid size (6x6 grid)
+    const gridSize = { rows: 6, columns: 6 };
+
+    // Initialize game variables
+    let currentPosition = { row: 0, col: 0 };
+    let startPosition = { row: 0, col: 0 };
+    let goalPosition = []; // Multiple goals
+    let numGoal = 2;
+    let pathPosition = [];
+    let currentLayout = [];
+    let pathCount = 0;
+
+    // Load game layout based on the index
+    function load_layout(idx) {
+        let data = dataList[idx];
+        currentLayout = data[0];
+        startPosition = { row: data[1][0], col: data[1][1] };
+        currentPosition = startPosition;
+        goalPosition = data[2];
+        pathPosition = data[3];
+        numGoal = goalPosition.length;
+        return -1;
+    }
+
+    // Utility function to pause execution for a given time (milliseconds)
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // Start the game
+    function start_game() {
+        load_layout(game_idx[cur_game]);
+        createGrid();
+        addBlocks();
+        document.getElementById('game_count').innerHTML = 'Games: ' + (cur_game + 1) + '/' + task_length;
+        document.getElementById('belief-decision').style.display = 'none';
+        addPath();
+    }
+
+    // Replay the path
+    function path_play() {
+        if (intervalID) {
+            clearInterval(intervalID);
+        }
+        replayPath();
+    }
+
+    // Check if all required fields in the survey are filled
+    function check_radio_in_survey(name) {
+        let objs = document.getElementsByName(name);
+        let filled = false;
+        for (let i = 0; i < objs.length; i++) {
+            if (objs[i].checked) {
+                filled = true;
+                belief_ans = i;
+                break;
+            }
+        }
+        if (!filled) {
+            alert('Please fill out all required fields.');
+            objs[0].focus();
+            return false;
+        }
+        return true;
+    }
+
+    // Proceed to the next game
+    function next_game() {
+        if (check_radio_in_survey('dec_belief')) {
+            if (intervalID) {
+                clearInterval(intervalID);
+            }
+            user_actions.push(belief_ans);
+            document.querySelectorAll('input[name="dec_belief"]').forEach(input => {
+                input.checked = false;
+            });
+            cur_game += 1;
+            document.addEventListener('keydown', handleKeyPress);
+            let gridItem = document.getElementById('gridContainer');
+            gridItem.innerHTML = ''; // Clear the grid
+
+            if (cur_game >= task_length) {
+                finish_game();
+            } else {
+                start_game();
+            }
+        } else {
+            return -1;
+        }
+    }
+
+    // Finish the game and show the final survey
+    function finish_game() {
+        document.getElementById('survey_id').style.display = 'block';
+        document.getElementById('main_plot_interact').style.display = 'none';
+        endTime = new Date();
+        elapsedTime = endTime - startTime;
+        document.getElementById("output_time").value = elapsedTime;
+        document.getElementById("output_gameidx").value = game_idx;
+        document.getElementById("output_user_actions").value = JSON.stringify(user_actions);
+        return -1;
+    }
+
+    // Initialize the instruction page
+    function instruct_init() {
+        document.getElementById('consent_id').style.display = 'none';
+        document.getElementById('instruct_page').style.display = 'block';
+    }
+
+    // Initialize the game page
+    function game_init() {
+        document.getElementById('consent_id').style.display = 'none';
+        document.getElementById('instruct_page').style.display = 'none';
+        document.getElementById('main_plot_interact').style.display = 'block';
+        start_game();
+    }
+
+    // Handle the submission of the survey
+    function doSubmit(e) {
+        document.getElementById("output_time").value = elapsedTime;
+        document.getElementById("output_gameidx").value = game_idx;
+        document.getElementById("output_user_actions").value = JSON.stringify(user_actions);
+        document.getElementById("output_user_treatment").value = treatment;
+
+        if (cur_game < task_length) {
+            alert('Please finish all questions before submitting.');
+            e.preventDefault();
+            return -1;
+        }
+    }
+</script>
+
+
+<script id = 'interface_logic'>
+    var user_id = ""; // Controller for random seed
+    var view_type = ""; // Controller for preview
+    var regex = new RegExp("[-\\?&]workerId=([^&#]*)");
+    var results = regex.exec(window.location.href);
+    let startTime, endTime, elapsedTime;
+
+    if ((results == null) || (results[1] == "preview.html")) {
+        user_id = "preview";
+        view_type = "preview";
+    } else {
+        user_id = results[1];
+        view_type = 'work';
+    }
+
+    var myMathrandom = new Math.seedrandom(user_id.toString());
+    let treatment = Math.floor(myMathrandom() * 10000) % 2;
+    var dataList = (treatment == 0) ? dataList_belief : dataList_distance;
+    document.getElementById("output_user_treatment").value = treatment;
+
+    const layout_number = 30;
+    const max_action = 22;
+    const task_length = 30;
+    let game_idx = Array.from({ length: task_length }, (_, i) => i);
+    let num_actions = Array(task_length).fill(0);
+    let cur_game = 0;
+    let user_actions = [[]];
+    let intervalID = null;
+    let belief_ans = 0;
+
+    // Shuffle the game index
+    for (let i = task_length - 1; i > 0; i--) {
+        const j = Math.floor(myMathrandom() * (i + 1));
+        [game_idx[i], game_idx[j]] = [game_idx[j], game_idx[i]];
+    }
+    
+    initial_exp();
+
+    // Initialize the experiment
+    function initial_exp() {
+        if (view_type == "preview") {
+            document.getElementById('consent_id').style.display = 'none';
+            document.getElementById('instruct_page').style.display = 'none';
+            document.getElementById('survey_id').style.display = 'none';
+            document.getElementById('main_plot_interact').style.display = 'block';
+            start_game();
+        } else {
+            document.getElementById('consent_id').style.display = 'block';
+            document.getElementById('instruct_page').style.display = 'none';
+            document.getElementById('survey_id').style.display = 'none';
+            document.getElementById('main_plot_interact').style.display = 'none';
+        }
+        startTime = new Date();
+        return -1;
+    }
+</script>
+
+
+</html>
