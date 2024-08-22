@@ -1,0 +1,128 @@
+/* Center the body content and set the width */
+body {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.2; /* Set line height for better readability */
+}
+
+/* Add spacing between list items */
+li {
+    margin-bottom: 5px;
+}
+
+/* Define styles for the grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 50px); /* Create 6 columns, each 50px wide */
+    grid-template-rows: repeat(6, 50px); /* Create 6 rows, each 50px tall */
+    gap: 2px; /* Space between grid items */
+    border: 2px solid #333; /* Dark border around the grid */
+    width: 314px; /* Total width of the grid */
+    height: 314px; /* Total height of the grid */
+    text-align: center; /* Center content inside grid items */
+}
+
+/* Define styles for individual grid items */
+.grid-item {
+    width: 50px;
+    height: 50px;
+    background-color: #eee; /* Light gray background */
+    border: 1px solid #ccc; /* Light border around each grid item */
+    display: flex; /* Use flexbox to align content */
+    align-items: center; /* Vertically center content */
+    justify-content: center; /* Horizontally center content */
+}
+
+/* Style for the starting position */
+.start {
+    background-color: #00f; /* Blue background */
+}
+
+/* Style for the first goal position */
+.end1 {
+    color: #DE3163; /* Hot pink color for the goal symbol */
+    font-size: 36px; /* Larger font size */
+}
+
+/* Style for the second goal position */
+.end2 {
+    color: #008000; /* Green color for the goal symbol */
+    font-size: 36px; /* Larger font size */
+}
+
+/* Style for block (obstacle) items */
+.block {
+    background-color: #333; /* Dark gray background for blocks */
+}
+
+/* Style for the path (trail) items */
+.path {
+    background-color: #ADD8E6; /* Light blue background for the path */
+}
+
+/* Style for required form fields */
+.required-field::after {
+    content: "*"; /* Append an asterisk to indicate required fields */
+    color: red; /* Red color for the asterisk */
+}
+
+/* Style for text content within a specific div */
+div.text_page {
+    font-size: 100%; /* Default font size */
+}
+
+/* Style for tables with a specific class */
+table.tab-parallel {
+    text-align: center; /* Center align text in table */
+    border-collapse: separate; /* Separate borders in table */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Style for table cells without visible borders */
+td.mytd {
+    border: 0px; /* No border */
+    border-style: hidden; /* Hide border */
+}
+
+/* Style for table cells with gold borders */
+td.mytd2 {
+    border: 10px solid gold; /* Gold border with a width of 10px */
+}
+
+/* Style for survey divs */
+div.survey {
+    margin-left: 50px;
+    margin-right: 100px; /* Add margins to the sides of the survey */
+}
+
+/* Style for select options with a specific class */
+option.mydefault {
+    text-decoration-color: darkgray; /* Dark gray decoration color */
+    text-emphasis-color: darkgray; /* Dark gray emphasis color */
+}
+
+/* Style for iteration buttons */
+.iter_button {
+    width: 100px;
+    height: 30px; /* Set dimensions for iteration buttons */
+}
+
+/* Style for replay buttons */
+.replay_button {
+    width: 200px;
+    height: 30px; /* Set dimensions for replay buttons */
+}
+
+/* Style for the first radio label */
+.radio-label1 {
+    font-size: 24px; /* Set font size */
+    color: red; /* Set font color to red */
+}
+
+/* Style for the second radio label */
+.radio-label2 {
+    font-size: 24px; /* Set font size */
+    color: green; /* Set font color to green */
+}

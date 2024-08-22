@@ -1,0 +1,97 @@
+/* Center the body content and set the width */
+body {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.2; /* Set line height for better readability */
+}
+
+/* Add spacing between list items */
+li {
+    margin-bottom: 5px;
+}
+
+/* Define styles for the grid container */
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(6, 50px); /* 6 columns of 50px each */
+    grid-template-rows: repeat(6, 50px); /* 6 rows of 50px each */
+    gap: 2px; /* Space between grid items */
+    border: 2px solid #333; /* Dark border around the grid */
+    width: 312px; /* Total width of the grid */
+    height: 312px; /* Total height of the grid */
+    text-align: center; /* Center content inside grid items */
+}
+
+/* Define styles for individual grid items */
+.grid-item {
+    width: 50px;
+    height: 50px;
+    background-color: #eee; /* Light gray background */
+    border: 1px solid #ccc; /* Light border around each grid item */
+}
+
+/* Style for the start position */
+.start {
+    background-color: #00f; /* Blue background */
+    color: #fff; /* White text color */
+}
+
+/* Style for the end position */
+.end {
+    color: #DE3163; /* Hot pink color for the end symbol */
+    font-size: 36px; /* Larger font size */
+}
+
+/* Style for block (obstacle) items */
+.block {
+    background-color: #333; /* Dark gray background for blocks */
+}
+
+/* Style for required form fields */
+.required-field::after {
+    content: "*"; /* Append an asterisk to indicate required fields */
+    color: red; /* Red color for the asterisk */
+}
+
+/* Style for text content within a specific div */
+div.text_page {
+    font-size: 100%; /* Default font size */
+}
+
+/* Style for tables with a specific class */
+table.tab-parallel {
+    text-align: center; /* Center align text in table */
+    border-collapse: separate; /* Separate borders in table */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Style for table cells without visible borders */
+td.mytd {
+    border: 0px; /* No border */
+    border-style: hidden; /* Hide border */
+}
+
+/* Style for table cells with gold borders */
+td.mytd2 {
+    border: 10px solid gold; /* Gold border with a width of 10px */
+}
+
+/* Style for survey divs */
+div.survey {
+    margin-left: 50px;
+    margin-right: 100px; /* Add margins to the sides of the survey */
+}
+
+/* Style for select options with a specific class */
+option.mydefault {
+    text-decoration-color: darkgray; /* Dark gray decoration color */
+    text-emphasis-color: darkgray; /* Dark gray emphasis color */
+}
+
+/* Style for iteration buttons */
+.iter_button {
+    width: 100px;
+    height: 30px; /* Set dimensions for iteration buttons */
+}
